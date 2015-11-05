@@ -7,6 +7,8 @@
 
 /** Set Up webLine */
 var webLine = {
+
+  /** Location is originally set to 'home' */
   loc: 'home',
 
   /**
@@ -15,8 +17,6 @@ var webLine = {
    *  @param {string} text A String of text that will be parsed.
    */
   in: text => {
-
-    //parse input & produce output
     (text[0] === '/') ? commandManager.callCommand.apply(commandManager, getCommand(text)) :
                         commandManager.callCommand(webLine.loc, text);
   },
@@ -42,7 +42,7 @@ var webLine = {
    *  Mount Display
    *
    *  @param {object} [targetNode] An HTML5 Node to mount to.
-   *  @returns {array} Returns an array of strings, the command & text
+   *  @returns {object} Returns an array of strings, the command & text
    */
   mount: targetNode => {
     let div = document.createElement('div');
@@ -59,7 +59,7 @@ var webLine = {
  *  A function to get the command and the text after the command
  *
  *  @param {string} text A string of text to be parsed
- *  @returns {array} Returns an array of strings, the command & text
+ *  @returns {object} Returns an array of strings, the command & text
  */
 function getCommand(text) {
   try {
