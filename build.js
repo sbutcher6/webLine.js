@@ -30,6 +30,15 @@ _webLine2.default.slash.add('js', function (text) {
   }
   _webLine2.default.out(response);
 });
+_webLine2.default.slash.add('google', function (text) {
+  location.href = 'https://www.google.com/search?q=' + text.split(' ').join('+');
+});
+_webLine2.default.slash.add('facebook', function (text) {
+  location.href = 'https://www.facebook.com/search?q=' + text.split(' ').join('+');
+});
+_webLine2.default.slash.add('youtube', function (text) {
+  location.href = 'https://www.youtube.com/results?search_query=' + text.split(' ').join('+');
+});
 _w2.default.addEvent('webLineInput', 'keyup', function () {
   if (event.keyCode === 13) {
     _webLine2.default.in(event.target.value);
