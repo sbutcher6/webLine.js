@@ -1,0 +1,20 @@
+{
+  "name": "webline",
+  "version": "1.0.0",
+  "description": "A small tool for creating simple command line interfaces for the web.",
+  "main": "webLine.js",
+  "scripts": {
+    "build": "browserify -t babelify test.js -o build.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alberthermida/webLine.git"
+  },
+  "author": "Albert Hermida",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alberthermida/webLine/issues"
+  },
+  "homepage": "https://github.com/alberthermida/webLine"
+}
