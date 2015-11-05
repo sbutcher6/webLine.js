@@ -573,21 +573,18 @@ function getCommand(text) {
  * Simple API to allow users to add commands, and manages string parsers.
  */
 webLine.slash = {
-  commands: {
-    'home': function home(text) {
-      return webLine.out(text);
-    }
-  },
+  commands: {},
 
   /**
    * Add a command and a function
    *
    * @param {string} command Should be the '/' command that will be associated with callback
-   * @param {function} fn will be the function associated with the command.
+   * @param {function} fn The function associated with the command.
+   * @param {boolean} [instant] Whether the function should be called, but not moved to (location).
    * Any text supplied after '/command' will be fed into fn
    */
-  add: function add(command, fn) {
-
+  add: function add(command, fn, instant) {
+    fn.instant = instant;
     //replace or create function for a particular command
     webLine.slash.commands[command] = fn;
   },
@@ -608,14 +605,26 @@ webLine.slash = {
       }
     } else {
       if (webLine.slash.commands.hasOwnProperty(command)) {
-        webLine.loc = command;
-        webLine.out('Location: ' + command + '.');
+        if (webLine.slash.commands[command].instant) {
+          webLine.slash.commands[command]();
+        } else {
+          webLine.loc = command;
+          webLine.out('Location: ' + command);
+        }
       } else {
         webLine.out('Sorry, ' + command + ' is not a registered command');
       }
     }
   }
 };
+
+/** Initialize Base Commands */
+webLine.slash.add('home', function (text) {
+  return webLine.out(text);
+});
+webLine.slash.add('location', function () {
+  return webLine.out(webLine.loc);
+}, true);
 
 exports.default = webLine;
 
