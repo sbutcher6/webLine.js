@@ -1,5 +1,5 @@
 /**
- *  webLine.js is an interface boilerplate for pseudo-'command line input'.
+ *  webLine.js is an interface boilerplate for a pseudo-'command line input'.
  *
  *  @author Albert Hermida
  *  @version 1.0
@@ -8,13 +8,34 @@
 /** Set Up webLine */
 var webLine = {
   loc: 'home',
+
+  /**
+   *  Input text to be parsed.
+   *
+   *  @param {string} text A String of text that will be parsed.
+   */
   in: text => {
+
     //parse input & produce output
     (text[0] === '/') ? commandManager.callCommand.apply(commandManager, getCommand(text)) :
                         commandManager.callCommand(webLine.loc, text);
   },
+
+  /**
+   *  Output text to mounted div.
+   *
+   *  @param {string} text A String of text that will be output.
+   */
   out: text => {
+
     //produce output to screen
+    let div = document.createElement('div');
+    div.appendChild(document.createTextNode(text));
+    if (webLine.targetNode) {
+      webLine.targetNode.appendChild(div);
+    } else {
+      throw new Error('Mount must be called before outputting text.');
+    }
   },
 
   /**
@@ -24,7 +45,13 @@ var webLine = {
    *  @returns {array} Returns an array of strings, the command & text
    */
   mount: targetNode => {
+    let div = document.createElement('div');
+    div.id = 'webLine';
+    targetNode ? targetNode.appendChild(div) :
+                 document.body.appendChild(div);
 
+    //cache node after query
+    webLine.targetNode = document.getElementById('webLine');
   }
 };
 
@@ -50,8 +77,10 @@ function getCommand(text) {
  *
  * Simple API to allow users to add commands, and manages string parsers.
  */
-let commandManager = {
-  commands: {},
+var commandManager = {
+  commands: {
+    'home': text => webLine.out(text);
+  },
 
  /**
   * Add a command and a function
@@ -91,8 +120,4 @@ let commandManager = {
   }
 };
 
-/** Mount Display */
-(() => {
-  //bind to body
-
-})();
+export webLine, commandManager;
