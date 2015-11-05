@@ -4,7 +4,7 @@
   "description": "A small tool for creating simple command line interfaces for the web.",
   "main": "webLine.js",
   "scripts": {
-    "build": "browserify -t babelify test.js -o build.js",
+    "build": "browserify -t [ babelify --presets [ es2015 ] ] test.js -o build.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/alberthermida/webLine/issues"
   },
-  "homepage": "https://github.com/alberthermida/webLine"
+  "homepage": "https://github.com/alberthermida/webLine",
+  "devDependencies": {
+    "babel-preset-es2015": "^6.0.15"
+  }
 }
